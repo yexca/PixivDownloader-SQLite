@@ -1,0 +1,9 @@
+{
+    "download_path": "D:\\Downloads",
+    "db_host": "localhost",
+    "db_port": "3306",
+    "db_user": "root",
+    "db_password": "123456",
+    "db_database": "pixiv",
+    "refresh_token": "refresh_token"
+}

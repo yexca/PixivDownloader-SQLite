@@ -1,0 +1,4 @@
+app:
+  name: PixivDownloader
+  version: "1.0"
+  author: yexca
