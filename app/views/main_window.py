@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QApplication
 from app.views.home_window import HomeWindow
 from app.views.settings_window import SettingsWindow
 from app.views.about_window import AboutWindow
-from app.views.pixiv_auth_window import PixivAuthWindow
+# from app.views.pixiv_auth_window import PixivAuthWindow
 from app.controllers.main_controller import MainController
 
 class MainWindow(QMainWindow):
@@ -36,7 +36,7 @@ class MainWindow(QMainWindow):
         # 左侧菜单栏
         self.menu_list = QListWidget()
         self.menu_list.addItem("首页")
-        self.menu_list.addItem("Pixiv 验证")
+        # self.menu_list.addItem("Pixiv 验证")
         self.menu_list.addItem("设置")
         self.menu_list.addItem("关于")
         self.menu_list.currentRowChanged.connect(self.change_page)
@@ -46,7 +46,7 @@ class MainWindow(QMainWindow):
 
         # 添加页面
         self.stacked_widget.addWidget(HomeWindow())
-        self.stacked_widget.addWidget(PixivAuthWindow())
+        # self.stacked_widget.addWidget(PixivAuthWindow())
         self.stacked_widget.addWidget(SettingsWindow())
         self.stacked_widget.addWidget(AboutWindow())
 
