@@ -48,4 +48,4 @@ class PixivModel:
             cursor.execute("""
                     INSERT OR REPLACE INTO pic(ID, name, downloadedDate, lastDownloadID, url)
                     VALUES(?, ?, ?, ?, ?)
-                """, (userId, userInfo.get("name"), formatted_time, userInfo.get("lastDownloadID"), "https://www.pixiv.net/users/" + userId, ))
+                """, (userId, userInfo.get("name"), formatted_time, userInfo.get("lastDownloadID"), f"https://www.pixiv.net/users/{userId}", ))

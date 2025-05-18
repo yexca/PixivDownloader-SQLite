@@ -1,5 +1,10 @@
 MAIN_STYLE = """
 
+/* 全局禁用 focus 框 */
+*:focus {
+    outline: none;
+}
+
 /* 全局背景 */
 QMainWindow {
     background-image: url();
@@ -33,7 +38,7 @@ QListWidget::item {
 QListWidget::item:selected {
     border: none;
     background: rgba(255, 255, 255, 0.2); /* 选中效果 */
-    color: #0078d7;                      /* 选中文本颜色 */
+    color: #ffb6c1;                      /* 选中文本颜色 */
 }
 
 /* 标签样式 */

@@ -10,8 +10,8 @@ class AboutWindow(QWidget):
         self.description = QLabel()
         self.description.setText(
             """<p>作者: <a href="https://github.com/yexca">yexca</a> <br/>
-            没有任何错误处理，非常简单的程序<br/>
-            具体请访问 <a href="https://blog.yexca.net/archives/211" rel="noopener">https://blog.yexca.net/archives/211</a>
+            就做了一个错误处理，能不能运行看运气吧~<br/>
+            具体请访问 <a href="https://blog.yexca.net/archives/248" rel="noopener">https://blog.yexca.net/archives/248</a>
              查看吧</p>"""
         )
         self.description.setOpenExternalLinks(True)  # Enable hyperlink functionality

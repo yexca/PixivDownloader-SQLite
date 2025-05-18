@@ -9,7 +9,7 @@ else:
     # 如果是开发环境，放在主入口
     BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-DB_PATH = BASE_DIR / "pixiv.db"
+DB_PATH = BASE_DIR / "resources" / "pixiv.db"
 
 def get_connection():
     conn = sqlite3.connect(DB_PATH, check_same_thread=False)

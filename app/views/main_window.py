@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QMainWindow, QSplitter, QListWidget, QStackedWidget, QMessageBox
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPainter, QPixmap
+from PyQt6.QtGui import QPainter, QPixmap, QIcon
 from PyQt6.QtWidgets import QApplication
 
 from app.views.home_window import HomeWindow
@@ -16,10 +16,12 @@ class MainWindow(QMainWindow):
         self.init_ui()
 
     def init_ui(self):
-        try:
-            self.setWindowTitle(self.controller.get_app_name() + " v" + self.controller.get_app_version())
-        except RuntimeError as e:
-            QMessageBox.critical(None, "错误", f"程序初始化失败: {e}")
+        # try:
+        #     self.setWindowTitle(self.controller.get_app_name() + " v" + self.controller.get_app_version())
+        # except RuntimeError as e:
+        #     QMessageBox.critical(None, "错误", f"程序初始化失败: {e}")
+        self.setWindowIcon(QIcon(self.controller.get_icon()))
+        self.setWindowTitle("PixivDownloader By yexca v1.0")
         # self.setFixedSize(1280, 720)  # 设置窗口大小
         # self.resize(1280, 720)
         screen = QApplication.primaryScreen()
@@ -32,6 +34,7 @@ class MainWindow(QMainWindow):
         # 创建 Splitter
         splitter = QSplitter()
         splitter.setOrientation(Qt.Orientation.Horizontal)
+        splitter.setHandleWidth(0)  # 把分隔线宽度设为 0
 
         # 左侧菜单栏
         self.menu_list = QListWidget()
@@ -56,6 +59,7 @@ class MainWindow(QMainWindow):
         splitter.setStretchFactor(1, 4)
 
         self.setCentralWidget(splitter)
+        self.menu_list.setCurrentRow(0)
 
     def paintEvent(self, event):
         painter = QPainter(self)

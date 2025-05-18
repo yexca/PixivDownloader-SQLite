@@ -18,7 +18,8 @@ class SingleDownload:
         # 清理文件夹路径
         userName = self.clean_path(userName)
         # 判断画师文件夹是否存在
-        save_dir = os.path.join(self.downloadPath, userName + " - " + userID)
+        # save_dir = os.path.join(self.downloadPath, userName + " - " + userID)
+        save_dir = os.path.join(self.downloadPath, f"{userName} - {userID}")
         os.makedirs(save_dir, exist_ok=True)
 
         file_name = url.split("/")[-1]  # 从 URL 中提取文件名

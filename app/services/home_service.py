@@ -88,8 +88,8 @@ class HomeService:
         i = 1
         lastDownloadID = 0
 
-        if userInfo["lastDownloadID"]:
-            lastDownloadID = userInfo["lastDownloadID"]
+        if "lastDownloadID" in userInfo:
+            lastDownloadID = int(userInfo["lastDownloadID"])
             logging.debug("Downloader.downloader: 数据库有记录")
             for url in self.downloadLink:
                 # 报告进度

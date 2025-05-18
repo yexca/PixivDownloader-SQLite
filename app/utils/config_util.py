@@ -16,6 +16,7 @@ class ConfigUtil:
         # self.QSS_PATH = os.path.join(RESOURCES_DIR, 'stylesheets', 'main.qss')
 
         self.BGIMG = os.path.join(RESOURCES_DIR, 'images', 'background.png')
+        self.ICON = os.path.join(RESOURCES_DIR, 'icon.ico')
         
     def getSettings(self):
         try:
@@ -28,6 +29,8 @@ class ConfigUtil:
 
     def getBackgroundImage(self):
         return self.BGIMG
+    def getIcon(self):
+        return self.ICON
 
     # def getDownloadPath(self):
     #     settings = self.getSettings()
