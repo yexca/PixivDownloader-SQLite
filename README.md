@@ -8,6 +8,18 @@ This project was originally developed using MySQL but was refactored to use SQLi
 
 MySQL Repo: <https://github.com/yexca/PixivDownloader-MySQL>
 
+## Overview
+
+Home
+
+![main](https://github.com/yexca/picx-images-hosting/raw/master/2026/01-pixiv-downloader-readme/image.73ufnw4wqo.webp)
+
+Setting
+
+![setting](https://github.com/yexca/picx-images-hosting/raw/master/2026/01-pixiv-downloader-readme/settings.32ig9i2nxz.webp)
+
+> Background image: <https://www.pixiv.net/artworks/83273073>
+
 ## Features
 
 * **User-Friendly GUI:** A simple and clean interface built with PyQt6.
