@@ -18,7 +18,7 @@ class HomeService:
 
     def download(self, userId, illustId, reportProgress):
         # 获取画师信息
-        reportProgress("获取画师信息中")
+        reportProgress("Getting user info...")
 
         try:
             if userId:
@@ -30,26 +30,26 @@ class HomeService:
         except RuntimeError as e:
             raise RuntimeError(f"获取信息出错: {e}")
 
-        reportProgress("获取画师信息完成，获取作品信息中")
+        reportProgress("Got user info. Getting artworks info...")
 
         # 下载
         illusts = self.pixivUtil.getAllIllustFromUserID(userInfo["ID"])
 
         # 获取下载链接
-        reportProgress("获取作品信息完成，获取下载链接中")
+        reportProgress("Got artworks info. Getting download links...")
         for illust in illusts:
             self._get_download_link(illust)
 
         # 下载
         lastDownloadID = self._download(userInfo, reportProgress)
-        reportProgress("下载完成，插入数据库中")
+        reportProgress("Download completed, Inserting database...")
 
         # 插入数据库
         userInfo["lastDownloadID"] = lastDownloadID
         self.model.insertById(userInfo)
 
         # 返回完成信号
-        reportProgress("插入数据库完成")
+        reportProgress("Inserted database")
         
     def _fetch_userInfo_from_userId(self, userId):
         userInfo = self.model.getInfoByID(userId)
@@ -93,7 +93,7 @@ class HomeService:
             logging.debug("Downloader.downloader: 数据库有记录")
             for url in self.downloadLink:
                 # 报告进度
-                reportProgress(f"正在下载第 {i} 张, 共 {total} 张")
+                reportProgress(f"Downloading NO. {i}, Total: {total}")
                 i += 1
 
                 currentDownloadID = int(url.split("/")[-1].split("_")[0].split("-")[0])
@@ -109,7 +109,7 @@ class HomeService:
             logging.debug("Downloader.downloader: 数据库无记录")
             for url in self.downloadLink:
                 # 报告进度
-                reportProgress(f"正在下载 {i}, 一共 {total}")
+                reportProgress(f"Downloading NO. {i}, Total: {total}")
                 i += 1
 
                 self.rand_sleep()

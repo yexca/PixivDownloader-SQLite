@@ -23,19 +23,18 @@ class PixivAuthWindow(QWidget):
         # description
         self.description = QLabel()
         self.description.setText(
-            """<p>现在 Pixiv 不支持账号密码使用，获取 <code>refresh token</code> 请访问 
-            <a href="https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362" rel="noopener">@ZipFile Pixiv OAuth Flow</a>
-             按照步骤操作即可</p>"""
+            """<p>Please visit <a href="https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362" rel="noopener">@ZipFile Pixiv OAuth Flow</a>
+            to get <code>refresh token</code> for using this application</p>"""
         )
         self.description.setOpenExternalLinks(True)  # Enable hyperlink functionality
         self.description.setWordWrap(True)  # Enable word wrapping
         self.description.setMaximumHeight(100)
 
         # Buttons
-        self.save_button = QPushButton("保存")
+        self.save_button = QPushButton("Save")
         self.save_button.clicked.connect(self.save_settings)
 
-        self.reset_button = QPushButton("重置")
+        self.reset_button = QPushButton("Reset")
         self.reset_button.clicked.connect(self.load_settings)
 
         refresh_token_layout = QHBoxLayout()
@@ -69,4 +68,4 @@ class PixivAuthWindow(QWidget):
         self.show_info()
     
     def show_info(self):
-        QMessageBox.information(self, "信息提示", "操作成功！", QMessageBox.StandardButton.Ok)
+        QMessageBox.information(self, "Info", "Successful", QMessageBox.StandardButton.Ok)

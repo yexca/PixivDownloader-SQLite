@@ -19,10 +19,10 @@ class SettingsWindow(QWidget):
         layout = QVBoxLayout()
 
         # Download Path
-        self.download_label = QLabel("下载路径:")
+        self.download_label = QLabel("Download Path:")
         self.download_path_display = QLabel("")
         self.download_path_display.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        self.download_path_button = QPushButton("选择路径")
+        self.download_path_button = QPushButton("Select Path")
         self.download_path_button.clicked.connect(self.select_download_path)
 
         # Token
@@ -32,9 +32,8 @@ class SettingsWindow(QWidget):
         # description
         self.description = QLabel()
         self.description.setText(
-            """<p>现在 Pixiv 不支持账号密码使用，获取 <code>refresh token</code> 请访问 
-            <a href="https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362" rel="noopener">@ZipFile Pixiv OAuth Flow</a>
-             按照步骤操作即可</p>"""
+            """<p>Please visit <a href="https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362" rel="noopener">@ZipFile Pixiv OAuth Flow</a>
+            to get <code>refresh token</code> for using this application</p>"""
         )
         self.description.setOpenExternalLinks(True)  # Enable hyperlink functionality
         self.description.setWordWrap(True)  # Enable word wrapping
@@ -61,10 +60,10 @@ class SettingsWindow(QWidget):
         # self.db_database_input = QLineEdit()
 
         # Buttons
-        self.save_button = QPushButton("保存")
+        self.save_button = QPushButton("Save")
         self.save_button.clicked.connect(self.save_settings)
 
-        self.reset_button = QPushButton("重置")
+        self.reset_button = QPushButton("Reset")
         self.reset_button.clicked.connect(self.load_settings)
 
         # Adding widgets to layout
@@ -144,10 +143,10 @@ class SettingsWindow(QWidget):
 
     def select_download_path(self):
         """Open a file dialog to select the download path."""
-        path = QFileDialog.getExistingDirectory(self, "选择下载路径")
-        logging.debug("SettingsWindow.select_download_path: 路径为: %s", path)
+        path = QFileDialog.getExistingDirectory(self, "Select Download Path")
+        logging.debug("SettingsWindow.select_download_path: Download Path is: %s", path)
         if path:
             self.download_path_display.setText(path.replace("/", "\\"))
 
     def show_info(self):
-        QMessageBox.information(self, "信息提示", "操作成功！", QMessageBox.StandardButton.Ok)
+        QMessageBox.information(self, "Info", "Successful", QMessageBox.StandardButton.Ok)

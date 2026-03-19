@@ -21,7 +21,7 @@ class MainWindow(QMainWindow):
         # except RuntimeError as e:
         #     QMessageBox.critical(None, "错误", f"程序初始化失败: {e}")
         self.setWindowIcon(QIcon(self.controller.get_icon()))
-        self.setWindowTitle("PixivDownloader By yexca v1.0")
+        self.setWindowTitle("PixivDownloader By yexca v1.1")
         # self.setFixedSize(1280, 720)  # 设置窗口大小
         # self.resize(1280, 720)
         screen = QApplication.primaryScreen()
@@ -38,10 +38,10 @@ class MainWindow(QMainWindow):
 
         # 左侧菜单栏
         self.menu_list = QListWidget()
-        self.menu_list.addItem("首页")
+        self.menu_list.addItem("Home")
         # self.menu_list.addItem("Pixiv 验证")
-        self.menu_list.addItem("设置")
-        self.menu_list.addItem("关于")
+        self.menu_list.addItem("Sttings")
+        self.menu_list.addItem("About")
         self.menu_list.currentRowChanged.connect(self.change_page)
 
         # 右侧内容区

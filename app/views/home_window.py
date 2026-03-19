@@ -13,15 +13,15 @@ class HomeWindow(QWidget):
         layout = QVBoxLayout()
         
         # 画师 ID
-        self.userID_label = QLabel("画师 ID:")
+        self.userID_label = QLabel("User ID:")
         self.userID_input = QLineEdit()
 
         # 作品 ID
-        self.illustID_label = QLabel("作品 ID:")
+        self.illustID_label = QLabel("Artwork ID:")
         self.illustID_input = QLineEdit()
 
         # Button
-        self.button = QPushButton("开始")
+        self.button = QPushButton("Start")
         self.button.clicked.connect(self.startDownload)
 
         userID_layout = QHBoxLayout()
@@ -43,7 +43,7 @@ class HomeWindow(QWidget):
     def startDownload(self):
         try:
             self.button.setEnabled(False)
-            self.button.setText("验证输入中")
+            self.button.setText("verify typing")
             # 判断输入
             if self.userID_input.text() or self.illustID_input.text():
                 self.thread = DownloadThread(self.userID_input.text(), self.illustID_input.text())
@@ -55,15 +55,15 @@ class HomeWindow(QWidget):
         except Exception as e:
             print(f"Error in startDownload: {e}")
             self.button.setEnabled(True)
-            self.button.setText("开始")
-            QMessageBox.warning(self, "信息提示", "查询画师出错，请检查输入是否正确", QMessageBox.StandardButton.Ok)
+            self.button.setText("Start")
+            QMessageBox.warning(self, "Info", "Error at search user, Please Check User ID", QMessageBox.StandardButton.Ok)
 
     def update_button(self, info):
         self.button.setText(info)
 
     def task_finished(self):
-        QMessageBox.information(self, "信息提示", "下载完成！", QMessageBox.StandardButton.Ok)
+        QMessageBox.information(self, "Info", "Download Completed", QMessageBox.StandardButton.Ok)
         self.button.setEnabled(True)
-        self.button.setText("开始")
+        self.button.setText("Start")
     def show_warn(self):
-        QMessageBox.warning(self, "信息提示", "未输入", QMessageBox.StandardButton.Ok)
+        QMessageBox.warning(self, "Info", "Please input User ID or Artwork ID", QMessageBox.StandardButton.Ok)
