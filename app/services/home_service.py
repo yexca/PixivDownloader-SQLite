@@ -96,7 +96,7 @@ class HomeService:
                 reportProgress(f"正在下载第 {i} 张, 共 {total} 张")
                 i += 1
 
-                currentDownloadID = int(url.split("/")[-1].split("_")[0])
+                currentDownloadID = int(url.split("/")[-1].split("_")[0].split("-")[0])
                 if currentDownloadID <= int(userInfo["lastDownloadID"]):
                     logging.info("这张图片已经下载过了: %s", currentDownloadID)
                     continue
@@ -113,7 +113,7 @@ class HomeService:
                 i += 1
 
                 self.rand_sleep()
-                currentDownloadID = int(url.split("/")[-1].split("_")[0])
+                currentDownloadID = int(url.split("/")[-1].split("_")[0].split("-")[0])
                 logging.info("正在下载: %s", currentDownloadID)
                 self.single_download(userInfo["name"], userInfo["ID"], url)
                 if lastDownloadID < currentDownloadID:
