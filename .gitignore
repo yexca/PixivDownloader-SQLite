@@ -4,3 +4,5 @@ logs/
 build/
 dist/
 *.spec
+sample*/
+env/
