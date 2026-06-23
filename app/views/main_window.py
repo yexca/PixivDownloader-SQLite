@@ -1,13 +1,13 @@
-from PyQt6.QtWidgets import QMainWindow, QSplitter, QListWidget, QStackedWidget, QMessageBox
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPainter, QPixmap, QIcon
-from PyQt6.QtWidgets import QApplication
+from PyQt6.QtGui import QIcon, QPainter, QPixmap
+from PyQt6.QtWidgets import QApplication, QListWidget, QMainWindow, QSplitter, QStackedWidget
 
-from app.views.home_window import HomeWindow
-from app.views.settings_window import SettingsWindow
-from app.views.about_window import AboutWindow
 # from app.views.pixiv_auth_window import PixivAuthWindow
 from app.controllers.main_controller import MainController
+from app.views.about_window import AboutWindow
+from app.views.home_window import HomeWindow
+from app.views.settings_window import SettingsWindow
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -16,10 +16,6 @@ class MainWindow(QMainWindow):
         self.init_ui()
 
     def init_ui(self):
-        # try:
-        #     self.setWindowTitle(self.controller.get_app_name() + " v" + self.controller.get_app_version())
-        # except RuntimeError as e:
-        #     QMessageBox.critical(None, "错误", f"程序初始化失败: {e}")
         self.setWindowIcon(QIcon(self.controller.get_icon()))
         self.setWindowTitle("PixivDownloader By yexca v1.1")
         # self.setFixedSize(1280, 720)  # 设置窗口大小

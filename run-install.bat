@@ -103,7 +103,7 @@ if errorlevel 1 (
 python -m pip install --upgrade pip
 if errorlevel 1 exit /b 1
 
-python -m pip install PyQt6 pixivpy3 requests PyYAML
+python -m pip install PyQt6 pixivpy3 requests PyYAML ruff pytest
 if errorlevel 1 exit /b 1
 
 call "%CONDA_BAT%" deactivate

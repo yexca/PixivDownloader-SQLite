@@ -1,5 +1,6 @@
 from app.services.settings_service import SettingsService
 
+
 class SettingsController:
     def __init__(self):
         self.service = SettingsService()

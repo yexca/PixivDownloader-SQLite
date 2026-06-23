@@ -1,9 +1,11 @@
 from PyQt6.QtCore import QThread, pyqtSignal
+
 from app.controllers.home_controller import HomeController
+
 
 class DownloadThread(QThread):
     progress = pyqtSignal(str)
-    finished = pyqtSignal()    # 信号，表示任务完成
+    finished = pyqtSignal()  # 信号，表示任务完成
 
     def __init__(self, user_id, illust_id):
         super().__init__()

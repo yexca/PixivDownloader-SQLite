@@ -1,12 +1,14 @@
-from pixivpy3 import *
+from pixivpy3 import AppPixivAPI
+
 from app.utils.config_util import ConfigUtil
 from app.utils.random_sleep import RandomSleep
 
-class Pixiv():
+
+class Pixiv:
     def __init__(self):
         self.api = AppPixivAPI()
-        configUtil = ConfigUtil()
-        settings = configUtil.getSettings()
+        config_util = ConfigUtil()
+        settings = config_util.get_settings()
         # self.refreshToken = settings.get("refresh_token", "")
         self.api.auth(refresh_token=settings.get("refresh_token", ""))
         # self.refreshToken = ""
@@ -19,48 +21,48 @@ class Pixiv():
     #     conf = Conf()
     #     self.refreshToken = conf.getRefreshRoken()
 
-    def getInfoByIllustId(self, illustId):
+    def get_info_by_illust_id(self, illust_id):
         # self.api.auth(refresh_token=token)
-        json_result = self.api.illust_detail(illustId)
+        json_result = self.api.illust_detail(illust_id)
         illust = json_result.illust
         return illust.user
-    
-    def getInfoByUserId(self, userID):
+
+    def get_info_by_user_id(self, user_id):
         # self.api.auth(refresh_token=token)
-        json_result = self.api.user_detail(userID)
+        json_result = self.api.user_detail(user_id)
         return json_result.user
 
     # def getUserIDFromillustID(self, illustID: str) -> str:
     #     json_result = self.api.illust_detail(illustID)
     #     illust = json_result.illust
     #     userID = illust.user.id
-        
+
     #     return userID
-    
+
     # def getUsernameFromillustID(self, illustID: str) -> str:
     #     json_result = self.api.illust_detail(illustID)
     #     illust = json_result.illust
     #     username = illust.user.name
-        
+
     #     return username
-    
+
     # def getUsernameFromuserID(self, userID: str) -> str:
     #     json_result = self.api.user_detail(userID)
     #     # userInfo = json_result.user
     #     # username = userInfo.name
     #     logging.debug("Pixiv.getUsernameFromuserID: 获取用户名: %s", json_result.user.name)
     #     return json_result.user.name
-    
-    def getAllIllustFromUserID(self, userID: str):
+
+    def get_all_illust_from_user_id(self, user_id: str):
         illusts = []
         # 参考: https://github.com/eggplants/pixiv-bulk-downloader/blob/eaf30d6f65fc2a1db7452e0cefee1c544e19bebe/pbd/base.py#L32-L85
         next_qs = {}
         while next_qs is not None:
             if next_qs == {}:
-                json_result = self.api.user_illusts(userID)
+                json_result = self.api.user_illusts(user_id)
             else:
                 json_result = self.api.user_illusts(**next_qs)
-            
+
             if "error" in json_result and "invalid_grant" in json_result["error"]["message"]:
                 self.api.auth(refresh_token=self.refreshToken)
                 continue
@@ -71,4 +73,12 @@ class Pixiv():
             next_qs = self.api.parse_qs(json_result["next_url"])
             self.rand_sleep()
         return illusts
-    
+
+    def getInfoByIllustId(self, illust_id):
+        return self.get_info_by_illust_id(illust_id)
+
+    def getInfoByUserId(self, user_id):
+        return self.get_info_by_user_id(user_id)
+
+    def getAllIllustFromUserID(self, user_id: str):
+        return self.get_all_illust_from_user_id(user_id)

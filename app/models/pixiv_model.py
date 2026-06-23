@@ -1,51 +1,64 @@
-from datetime import datetime
-from app.utils.db import get_connection
 import logging
+from datetime import datetime
+from pathlib import Path
+
+from app.utils.db import get_connection
+
+logger = logging.getLogger(__name__)
+
 
 class PixivModel:
-    def __init__(self):
-        self.conn = get_connection()
-        self._createTable()
+    def __init__(self, db_path: Path | str | None = None):
+        self.conn = get_connection(db_path)
+        self._create_table()
 
-    def _createTable(self):
+    def _create_table(self):
         with self.conn:
             cursor = self.conn.cursor()
-            cursor.execute("""
+            cursor.execute(
+                """
                 Create Table If Not Exists pic (
                     ID TEXT PRIMARY KEY,
                     name TEXT,
                     downloadedDate TEXT,
                     lastDownloadID TEXT,
                     url TEXT)
-                """)
+                """
+            )
             self.conn.commit()
 
-    def getInfoByID(self, userId):
+    def get_info_by_id(self, user_id):
         cursor = self.conn.cursor()
-        cursor.execute("SELECT * FROM pic WHERE id =  ?", (userId,))
+        cursor.execute("SELECT * FROM pic WHERE id = ?", (user_id,))
         row = cursor.fetchone()
         return dict(row) if row else None
-    
-    def insertById(self, userInfo):
-        logging.debug(f"插入或替换数据: {userInfo}")
-        userId = userInfo.get("ID")
-        # existFlag = self.getInfoByID(userId)
+
+    def insert_by_id(self, user_info):
+        logger.debug("插入或替换数据: %s", user_info)
+        user_id = user_info.get("ID")
         current_time = datetime.now()
-        formatted_time = current_time.strftime('%Y-%m-%d %H:%M:%S')
+        formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
         with self.conn:
             cursor = self.conn.cursor()
-            # if existFlag:
-            #     cursor.execute("""
-            #         UPDATE pic SET
-            #         name = ?, downloadedDate = ?, lastdownloadID = ?
-            #         WHERE ID = ?;
-            #     """, (userInfo.get("name"), formatted_time, userInfo.get("lastdownloadID"), userId, ))
-            # else:
-            #     cursor.execute("""
-            #         INSERT INTO pic VALUES
-            #         (?, ?, ?, ?, ?)
-            #     """, (userId, userInfo.get("name"), formatted_time, userInfo.get("lastdownloadID"), "https://www.pixiv.net/users/" + userId, ))
-            cursor.execute("""
+            cursor.execute(
+                """
                     INSERT OR REPLACE INTO pic(ID, name, downloadedDate, lastDownloadID, url)
                     VALUES(?, ?, ?, ?, ?)
-                """, (userId, userInfo.get("name"), formatted_time, userInfo.get("lastDownloadID"), f"https://www.pixiv.net/users/{userId}", ))
+                """,
+                (
+                    user_id,
+                    user_info.get("name"),
+                    formatted_time,
+                    user_info.get("lastDownloadID"),
+                    f"https://www.pixiv.net/users/{user_id}",
+                ),
+            )
+
+    def _createTable(self):
+        self._create_table()
+
+    def getInfoByID(self, user_id):
+        return self.get_info_by_id(user_id)
+
+    def insertById(self, user_info):
+        self.insert_by_id(user_info)

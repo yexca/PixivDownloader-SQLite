@@ -1,14 +1,23 @@
 import logging
-from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout, QLabel, QPushButton, QLineEdit, QFileDialog, QHBoxLayout, QMessageBox
-)
+
 from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
+    QFileDialog,
+    QHBoxLayout,
+    QLabel,
+    QLineEdit,
+    QMessageBox,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
+
 from app.controllers.settings_controller import SettingsController
+
 
 class SettingsWindow(QWidget):
     def __init__(self):
         super().__init__()
-        # self.settings_path = os.path.join(os.getcwd(), "app", "resources", "conf", "settings.json")
         self.settings = {}
         self.init_ui()
         self.controller = SettingsController()
@@ -32,8 +41,11 @@ class SettingsWindow(QWidget):
         # description
         self.description = QLabel()
         self.description.setText(
-            """<p>Please visit <a href="https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362" rel="noopener">@ZipFile Pixiv OAuth Flow</a>
-            to get <code>refresh token</code> for using this application</p>"""
+            "<p>Please visit "
+            '<a href="https://gist.github.com/ZipFile/'
+            'c9ebedb224406f4f11845ab700124362" rel="noopener">'
+            "@ZipFile Pixiv OAuth Flow</a> to get "
+            "<code>refresh token</code> for using this application</p>"
         )
         self.description.setOpenExternalLinks(True)  # Enable hyperlink functionality
         self.description.setWordWrap(True)  # Enable word wrapping

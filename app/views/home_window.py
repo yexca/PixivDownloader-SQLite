@@ -1,7 +1,19 @@
+import logging
+
 from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout, QLabel, QPushButton, QLineEdit, QFileDialog, QHBoxLayout, QMessageBox
+    QHBoxLayout,
+    QLabel,
+    QLineEdit,
+    QMessageBox,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
 )
+
 from app.threads.download_threads import DownloadThread
+
+logger = logging.getLogger(__name__)
+
 
 class HomeWindow(QWidget):
     def __init__(self):
@@ -11,28 +23,28 @@ class HomeWindow(QWidget):
 
     def init_ui(self):
         layout = QVBoxLayout()
-        
+
         # 画师 ID
-        self.userID_label = QLabel("User ID:")
-        self.userID_input = QLineEdit()
+        self.user_id_label = QLabel("User ID:")
+        self.user_id_input = QLineEdit()
 
         # 作品 ID
-        self.illustID_label = QLabel("Artwork ID:")
-        self.illustID_input = QLineEdit()
+        self.illust_id_label = QLabel("Artwork ID:")
+        self.illust_id_input = QLineEdit()
 
         # Button
         self.button = QPushButton("Start")
-        self.button.clicked.connect(self.startDownload)
+        self.button.clicked.connect(self.start_download)
 
-        userID_layout = QHBoxLayout()
-        userID_layout.addWidget(self.userID_label)
-        userID_layout.addWidget(self.userID_input)
-        layout.addLayout(userID_layout)
+        user_id_layout = QHBoxLayout()
+        user_id_layout.addWidget(self.user_id_label)
+        user_id_layout.addWidget(self.user_id_input)
+        layout.addLayout(user_id_layout)
 
-        illustID_layout = QHBoxLayout()
-        illustID_layout.addWidget(self.illustID_label)
-        illustID_layout.addWidget(self.illustID_input)
-        layout.addLayout(illustID_layout)
+        illust_id_layout = QHBoxLayout()
+        illust_id_layout.addWidget(self.illust_id_label)
+        illust_id_layout.addWidget(self.illust_id_input)
+        layout.addLayout(illust_id_layout)
 
         button_layout = QHBoxLayout()
         button_layout.addWidget(self.button)
@@ -40,23 +52,31 @@ class HomeWindow(QWidget):
 
         self.setLayout(layout)
 
-    def startDownload(self):
+    def start_download(self):
         try:
             self.button.setEnabled(False)
             self.button.setText("verify typing")
             # 判断输入
-            if self.userID_input.text() or self.illustID_input.text():
-                self.thread = DownloadThread(self.userID_input.text(), self.illustID_input.text())
+            if self.user_id_input.text() or self.illust_id_input.text():
+                self.thread = DownloadThread(self.user_id_input.text(), self.illust_id_input.text())
                 self.thread.progress.connect(self.update_button)
                 self.thread.finished.connect(self.task_finished)
                 self.thread.start()
             else:
                 self.show_warn()
         except Exception as e:
-            print(f"Error in startDownload: {e}")
+            logger.exception("Error in start_download: %s", e)
             self.button.setEnabled(True)
             self.button.setText("Start")
-            QMessageBox.warning(self, "Info", "Error at search user, Please Check User ID", QMessageBox.StandardButton.Ok)
+            QMessageBox.warning(
+                self,
+                "Info",
+                "Error at search user, Please Check User ID",
+                QMessageBox.StandardButton.Ok,
+            )
+
+    def startDownload(self):
+        self.start_download()
 
     def update_button(self, info):
         self.button.setText(info)
@@ -65,5 +85,8 @@ class HomeWindow(QWidget):
         QMessageBox.information(self, "Info", "Download Completed", QMessageBox.StandardButton.Ok)
         self.button.setEnabled(True)
         self.button.setText("Start")
+
     def show_warn(self):
-        QMessageBox.warning(self, "Info", "Please input User ID or Artwork ID", QMessageBox.StandardButton.Ok)
+        QMessageBox.warning(
+            self, "Info", "Please input User ID or Artwork ID", QMessageBox.StandardButton.Ok
+        )

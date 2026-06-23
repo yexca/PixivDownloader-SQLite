@@ -1,8 +1,8 @@
+import sqlite3
 import sys
 from pathlib import Path
-import sqlite3
 
-if getattr(sys, 'frozen', False):
+if getattr(sys, "frozen", False):
     # 如果是打包后，放在和可执行文件同目录
     BASE_DIR = Path(sys.executable).parent
 else:
@@ -11,8 +11,9 @@ else:
 
 DB_PATH = BASE_DIR / "resources" / "pixiv.db"
 
-def get_connection():
-    conn = sqlite3.connect(DB_PATH, check_same_thread=False)
+
+def get_connection(db_path: Path | str | None = None):
+    conn = sqlite3.connect(db_path or DB_PATH, check_same_thread=False)
     # 将返回风格从元组改为字典风格
     conn.row_factory = sqlite3.Row
     return conn

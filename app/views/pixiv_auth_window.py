@@ -1,17 +1,23 @@
 from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout, QLabel, QPushButton, QLineEdit, QFileDialog, QHBoxLayout, QMessageBox
+    QHBoxLayout,
+    QLabel,
+    QLineEdit,
+    QMessageBox,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
 )
+
 from app.controllers.pixiv_auth_controller import PixivAuthController
+
 
 class PixivAuthWindow(QWidget):
     def __init__(self):
         super().__init__()
-        # self.settings_path = os.path.join(os.getcwd(), "app", "resources", "conf", "settings.json")
         self.controller = PixivAuthController()
-        self.authToken = {}
+        self.auth_token = {}
         self.init_ui()
         self.load_settings()
-        pass
 
     def init_ui(self):
         # Layout
@@ -23,8 +29,11 @@ class PixivAuthWindow(QWidget):
         # description
         self.description = QLabel()
         self.description.setText(
-            """<p>Please visit <a href="https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362" rel="noopener">@ZipFile Pixiv OAuth Flow</a>
-            to get <code>refresh token</code> for using this application</p>"""
+            "<p>Please visit "
+            '<a href="https://gist.github.com/ZipFile/'
+            'c9ebedb224406f4f11845ab700124362" rel="noopener">'
+            "@ZipFile Pixiv OAuth Flow</a> to get "
+            "<code>refresh token</code> for using this application</p>"
         )
         self.description.setOpenExternalLinks(True)  # Enable hyperlink functionality
         self.description.setWordWrap(True)  # Enable word wrapping
@@ -55,17 +64,17 @@ class PixivAuthWindow(QWidget):
 
     def load_settings(self):
         # Load settings from the JSON file.
-        self.authToken = self.controller.get_pixiv_auth_token()
+        self.auth_token = self.controller.get_pixiv_auth_token()
 
         # Populate fields
-        self.refresh_token_input.setText(self.authToken)
-    
+        self.refresh_token_input.setText(self.auth_token)
+
     def save_settings(self):
         # Save current settings to the JSON file.
-        self.authToken = self.refresh_token_input.text()
+        self.auth_token = self.refresh_token_input.text()
 
-        self.controller.save_pixiv_auth_token(self.authToken)
+        self.controller.save_pixiv_auth_token(self.auth_token)
         self.show_info()
-    
+
     def show_info(self):
         QMessageBox.information(self, "Info", "Successful", QMessageBox.StandardButton.Ok)
